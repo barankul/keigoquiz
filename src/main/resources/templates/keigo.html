@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <title>敬語練習</title>
+</head>
+
+<body>
+    <div class="page">
+        <div class="card">
+            <h1 class="title">敬語練習しよう！</h1>
+            <p class="title">場面</p>
+            <p class="scene" th:text="${question.scene}"></p>
+            <p class="question-number" th:text="${currentIndex} + ' / ' + ${totalQuestions}"></p>
+            <ul class="options-list">
+                <li class="options-item" th:each="option : ${question.options}">
+                    <form action="/answer" method="post">
+                        <input type="hidden" name="selectedAnswer" th:value="${option}">
+                        <button class="option-button" type="submit" th:text="${option}" th:disabled="${selectedAnswer != null}"
+                            th:classappend="${selectedAnswer != null and option.equals(selectedAnswer) and isCorrect} ? ' selected-correct' : 
+                    (${selectedAnswer != null and option.equals(selectedAnswer) and !isCorrect} ? ' selected-wrong' : 
+                    (${selectedAnswer != null and option.equals(correctAnswer) and !isCorrect} ? ' actual-correct' : ''))">
+                        </button>
+                    </form>
+                </li>
+            </ul>
+            <div class="feedback-box" th:if="${selectedAnswer != null}">
+                <p class="feedback-title">あなたの答え</p>
+                <p class="feedback-answer" th:text="${selectedAnswer}"></p>
+                <p class="correct-text" th:if="${isCorrect}">正解！</p>
+                <p class="wrong-text" th:if="${!isCorrect}">不正解！</p>
+                <div class="correct-answer-box" th:if="${!isCorrect}">
+                    <p class="feedback-title">正しい答え</p>
+                    <p class="feedback-answer" th:text="${correctAnswer}"></p>
+                </div>
+                <p class="feedback-title">普通の表現</p>
+                <p class="normal-sentence" th:text="${question.normalSentence}"></p>
+                <p class="feedback-title">変化した表現</p>
+                <p class="changed-words" th:text="${question.changedWords}"></p>
+                <p class="feedback-title">解説</p>
+                <p class="explanation" th:text="${question.explanation}"></p>
+                <form action="/next" method="post" th:if="${!isLast}">
+                    <button class="next-button" type="submit">次</button>
+                </form>
+                <form action="/restart" method="post" th:if="${isLast}">
+                    <button class="reset-button" type="submit">もう一度</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
