@@ -21,8 +21,8 @@ Spring Boot と Thymeleaf を用いて作成した、敬語表現をクイズ形
 
 ## スクリーンショット
 
-(images/image.png)
-(images/image1.png)
+![screenshot](images/image.png)
+![screenshot](images/image1.png)
 
 ## Live Demo
 [敬語練習アプリ](https://keigoquiz-production.up.railway.app)
